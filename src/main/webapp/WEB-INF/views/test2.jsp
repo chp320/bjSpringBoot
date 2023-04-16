@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: leo
-  Date: 2023/04/12
-  Time: 1:08 AM
+  Date: 2023/04/17
+  Time: 1:02 AM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
@@ -15,9 +15,8 @@
 </head>
 <body>
 <%
-    out.println("#01 : Hello World");
+    out.println("#02 : Hello World");
 %>
-<br>
 당신의 아이디는 ${id} 입니다. <br>
 당신의 이름은 ${name} 입니다.
 
