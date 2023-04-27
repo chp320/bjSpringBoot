@@ -1,6 +1,7 @@
 package com.study.helloworld;
 
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 public class ContentValidator implements Validator {
@@ -14,16 +15,24 @@ public class ContentValidator implements Validator {
     public void validate(Object obj, Errors errors) {
         ContentDto dto = (ContentDto) obj;
 
+//        String sWriter = dto.getWriter();
+//        if (sWriter == null || sWriter.trim().isEmpty()) {
+//            System.out.println("Writer is null or empty");
+//            errors.rejectValue("writer", "trouble");
+//        }
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "writer", "writer is empty.");
         String sWriter = dto.getWriter();
-        if (sWriter == null || sWriter.trim().isEmpty()) {
-            System.out.println("Writer is null or empty");
-            errors.rejectValue("writer", "trouble");
+        if (sWriter.length() < 3) {
+            errors.rejectValue("writer", "writer is too short.");
         }
 
-        String sContent = dto.getContent();
-        if (sContent == null || sContent.trim().isEmpty()) {
-            System.out.println("Content is null or empty");
-            errors.rejectValue("content", "trouble");
-        }
+//        String sContent = dto.getContent();
+//        if (sContent == null || sContent.trim().isEmpty()) {
+//            System.out.println("Content is null or empty");
+//            errors.rejectValue("content", "trouble");
+//        }
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "content", "content is empty.");
     }
 }
