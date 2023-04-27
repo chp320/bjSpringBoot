@@ -18,7 +18,7 @@ createPage.jsp
 
 <%
     String conPath = request.getContextPath();
-    System.out.println("conPath: " + conPath);
+//    System.out.println("conPath: " + conPath);
 %>
 
 <form action="<%=conPath%>/create">
