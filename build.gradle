@@ -16,6 +16,7 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation ('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
@@ -25,6 +26,7 @@ dependencies {
     implementation 'org.projectlombok:lombok'
     */
     compileOnly 'org.projectlombok:lombok:1.18.22'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.32'    /* MySQL 데이터베이스 사용 의존성 셋팅 */
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
 
     // JSP 사용을 위한 의존성 추가

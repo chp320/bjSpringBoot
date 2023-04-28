@@ -1,5 +1,7 @@
 package com.study.helloworld;
 
+import com.study.helloworld.jdbc.MyUserDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,35 +17,26 @@ import java.util.List;
 @Controller
 public class MyController {
 
+    /* 생성자 주입 start */
+    private final MyUserDAO myUserDAO;
+
+    public MyController(MyUserDAO myUserDAO) {
+        this.myUserDAO = myUserDAO;
+    }
+    /* 생성자 주입 end */
+
+
     @RequestMapping("/")
     // 메서드에 @ResponseBody 어노테이션이 있는 경우, 리턴되는 스트링값 자체만 웹브라우저로 전달
     public @ResponseBody String root() throws Exception {
-        return "Validator (4)";
+        return "JdbcTemplate 사용하기";
     }
 
-    // 단순히 jsp 페이지 리턴
-    @RequestMapping("/insertForm")
-    public String insert1() {
-        return "createPage";
+    //    @GetMapping("/user")
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public String userlistPage(Model model) {
+        model.addAttribute("users", myUserDAO.list());
+
+        return "userlist";
     }
-
-    @RequestMapping("/create")
-    public String insert2(@ModelAttribute("dto") @Valid ContentDto contentDto, BindingResult result) {
-        String page = "createDonePage";
-        System.out.println(contentDto);
-
-        if (result.hasErrors()) {
-            if (result.getFieldError("writer") != null) {
-                System.out.println("1:" + result.getFieldError("writer").getDefaultMessage());
-            }
-            if (result.getFieldError("content") != null) {
-                System.out.println("2:" + result.getFieldError("content").getDefaultMessage());
-            }
-
-            page = "createPage";
-        }
-
-        return page;
-    }
-
 }
