@@ -1,5 +1,6 @@
 package com.study.helloworld;
 
+import com.study.helloworld.dao.ISimpleBbsDao;
 import com.study.helloworld.jdbc.MyUserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,25 +19,48 @@ import java.util.List;
 public class MyController {
 
     /* 생성자 주입 start */
-    private final MyUserDAO myUserDAO;
+    private final ISimpleBbsDao dao;
 
-    public MyController(MyUserDAO myUserDAO) {
-        this.myUserDAO = myUserDAO;
+    public MyController(ISimpleBbsDao dao) {
+        this.dao = dao;
     }
     /* 생성자 주입 end */
 
-
     @RequestMapping("/")
-    // 메서드에 @ResponseBody 어노테이션이 있는 경우, 리턴되는 스트링값 자체만 웹브라우저로 전달
-    public @ResponseBody String root() throws Exception {
-        return "JdbcTemplate 사용하기";
+    public String root() throws Exception {
+        // JdbcTemplate: SimpleBBS
+        return "redirect:list";     // list.jsp 로 리다이렉트
     }
 
-    //    @GetMapping("/user")
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    @RequestMapping("/list")
     public String userlistPage(Model model) {
-        model.addAttribute("users", myUserDAO.list());
+        model.addAttribute("list", dao.listDao());
+        return "list";
+    }
 
-        return "userlist";
+    @RequestMapping("/view")
+    public String view(HttpServletRequest request, Model model) {
+        String sId = request.getParameter("id");
+        model.addAttribute("dto", dao.viewDao(sId));
+        return "view";
+    }
+
+    @RequestMapping("/writeForm")
+    public String writeForm() {
+        return "writeForm";
+    }
+
+    @RequestMapping("/write")
+    public String write(Model model, HttpServletRequest request) {
+        dao.writeDao(request.getParameter("writer"),
+                request.getParameter("title"),
+                request.getParameter("content"));
+        return "redirect:list";
+    }
+
+    @RequestMapping("/delete")
+    public String delete(HttpServletRequest request, Model model) {
+        dao.deleteDao(request.getParameter("id"));
+        return "redirect:list";
     }
 }

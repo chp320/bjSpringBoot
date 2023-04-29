@@ -1,0 +1,24 @@
+/* ('23.04.27) 도서 "예제로 배우는 스프링부트 입문 - 13.JdbcTemplate 사용하기
+ * - DB를 쉽게 사용할 수 있도록 JdbcTemplate을 제공
+*/
+
+-- 테이블 생성
+drop table myuser;
+
+create table myuser (
+	id varchar(10),
+    name varchar(10)
+);
+
+-- 샘플 데이터 추가
+-- insert into myuser values ('test1', '홍길동1');
+-- insert into myuser values ('test2', '홍길동2');
+-- insert into myuser values ('test3', '홍길동3');
+insert into myuser values
+('test1', '홍길동1'),
+('test2', '홍길동2'),
+('test3', '홍길동3');
+
+select * from myuser;
+
+select 1 from dual ;

@@ -1,0 +1,49 @@
+/* ('23.04.28) 도서 "예제로 배우는 스프링부트 입문 - 14.간단한 게시판 만들기
+ * - JdbcTemplate을 이용하여 간단한 게시판 구현
+*/
+
+-- 14.1.1 테이블 생성
+drop table simple_bbs ;
+create table simple_bbs (
+	id int primary key,
+    writer varchar(100),
+    title varchar(100),
+    content varchar(100)
+);
+
+
+-- 시퀀스 생성 (오라클과 달리 MySQL에는 시퀀스 객체가 없기 때문에 유사한 기능 구현을 위해서 테이블 및 펑션을 제작한다.)
+DROP TABLE SEQ_MYSQL;
+CREATE TABLE SEQ_MYSQL(
+	ID VARCHAR(10) NOT NULL,
+    SEQ_NAME VARCHAR(50) NOT NULL
+);
+
+/* 생성된 펑션 삭제 */
+DROP FUNCTION IF EXISTS get_seq;
+
+/* Auto_increment 적용 */
+DELIMITER $$
+CREATE FUNCTION get_seq (p_seq_name VARCHAR(45))
+RETURNS VARCHAR(10) READS SQL DATA
+BEGIN
+DECLARE RESULT_ID INT;
+UPDATE SEQ_MYSQL SET ID = CAST(LAST_INSERT_ID(CAST(id as unsigned)+1) as char(10))
+WHERE SEQ_NAME = p_seq_name;
+SET RESULT_ID = (SELECT LAST_INSERT_ID());
+RETURN LPAD(RESULT_ID,10,'0');
+END $$
+DELIMITER ;
+
+/* 시퀀스 생성 */
+INSERT INTO seq_mysql
+VALUES ('0', 'ID_SEQ');
+
+/* 시퀀스 삽입 */
+SET SQL_SAFE_UPDATES = 0;	-- error code 1175 (수정/삭제 시, key열을 이용하지 않는 경우 발생. safe mode 비활성화하기 위한 설정)
+SELECT get_seq('ID_SEQ');	-- 책에서는 시퀀스명을 simple_bbs_seq 로 설정했다.
+
+/* 테이블 조회 */
+select * from simple_bbs ;
+-- insert into simple_bbs (id, writer, title, content) values ( (select get_seq('id_seq')), 'test', 'test', 'test') ;
+-- commit ;
