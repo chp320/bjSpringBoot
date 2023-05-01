@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 인터페이스(ISimpleBbsDao.java)의 구현을 자바 코드가 아닌, XML로 SQL만 생성한다. -->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 어떤 인터페이스와 관련된 매퍼인지 정의. 아래 SQL의 태그 id는 인터페이스에 정의된 id  -->
+<mapper namespace="com.study.helloworld.dao.ISimpleBbsDao">
+    <select id="listDao" resultType="com.study.helloworld.dto.SimpleBbsDto">
+        select * from simple_bbs order by id desc
+    </select>
+
+    <select id="viewDao" resultType="com.study.helloworld.dto.SimpleBbsDto">
+        select * from simple_bbs where id = #{param1}
+    </select>
+
+    <insert id="writeDao">
+        insert into simple_bbs (id, writer, title, content)
+        values ((select get_seq('id_seq')), #{param1}, #{param2}, #{param3})
+    </insert>
+
+    <delete id="deleteDao">
+        delete from simple_bbs where id = #{param1}
+    </delete>
+</mapper>

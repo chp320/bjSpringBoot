@@ -1,0 +1,6 @@
+(리퀘스트 맵핑)
+MyController.java
+(데이터베이스 사용)
+SimpleBbsDto.java
+ISimpleBbsDao.java
+SimpleBbsDao.xml (맵퍼)
