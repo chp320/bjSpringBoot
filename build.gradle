@@ -32,6 +32,7 @@ dependencies {
     /* 즉, 최소 자바11버전까지만 지원한다는 것. 따라서 MyBatis 버전을 낮춰서 진행해보자! */
     runtimeOnly 'mysql:mysql-connector-java:8.0.32'    /* MySQL 데이터베이스 사용 의존성 셋팅 */
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16'    /* log4jdbc 사용을 위한 의존성 셋팅 */
 
     // JSP 사용을 위한 의존성 추가
     implementation 'javax.servlet:jstl'

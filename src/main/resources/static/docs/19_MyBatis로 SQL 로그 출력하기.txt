@@ -1,0 +1,9 @@
+19.1 스프링 부트와 로깅
+- 자바는 많은 로깅 프레임워크가 있다
+- log4j, logback, log4j2, apache common logging, SLF4j, ...
+- 스프링 부트는 logback을 기본 로깅 시스템으로 지원 -> 별도 dependency 설정 불필요 (application.properties를 통한 설정)
+- 별도로 설정정보를 관리하면서 개발 가능한 '로깅 커스터마이징' 지원 -> logback.xml 파일을 resources 디렉토리에 만들어 참조
+
+19.2 사용 예제
+(로깅 설정 파일)
+src/main/resources/logback.xml
