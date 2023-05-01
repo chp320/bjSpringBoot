@@ -1,66 +1,35 @@
 package com.study.helloworld;
 
 import com.study.helloworld.dao.ISimpleBbsDao;
-import com.study.helloworld.jdbc.MyUserDAO;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.study.helloworld.jdbc.IMyUserDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Controller
 public class MyController {
 
     /* 생성자 주입 start */
-    private final ISimpleBbsDao dao;
+    private final IMyUserDao userDao;   // 인터페이스 타입의 객체 변수 -> mapper를 사용했기에 현 코드상에서는 implements한 클래스가 없음
 
-    public MyController(ISimpleBbsDao dao) {
-        this.dao = dao;
+    public MyController(IMyUserDao userDao) {
+        this.userDao = userDao;
     }
     /* 생성자 주입 end */
 
     @RequestMapping("/")
-    public String root() throws Exception {
-        // JdbcTemplate: SimpleBBS
-        return "redirect:list";     // list.jsp 로 리다이렉트
+    public @ResponseBody String root() throws Exception {
+        return "MyBatis 사용하기";
     }
 
-    @RequestMapping("/list")
+    //    @GetMapping("/user")
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
     public String userlistPage(Model model) {
-        model.addAttribute("list", dao.listDao());
-        return "list";
-    }
+        model.addAttribute("users", userDao.list());
 
-    @RequestMapping("/view")
-    public String view(HttpServletRequest request, Model model) {
-        String sId = request.getParameter("id");
-        model.addAttribute("dto", dao.viewDao(sId));
-        return "view";
-    }
-
-    @RequestMapping("/writeForm")
-    public String writeForm() {
-        return "writeForm";
-    }
-
-    @RequestMapping("/write")
-    public String write(Model model, HttpServletRequest request) {
-        dao.writeDao(request.getParameter("writer"),
-                request.getParameter("title"),
-                request.getParameter("content"));
-        return "redirect:list";
-    }
-
-    @RequestMapping("/delete")
-    public String delete(HttpServletRequest request, Model model) {
-        dao.deleteDao(request.getParameter("id"));
-        return "redirect:list";
+        return "userlist";
     }
 }

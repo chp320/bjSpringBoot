@@ -16,7 +16,7 @@
 <body>
 
 <%
-    out.println("JdbcTemplate: Hello World");
+    out.println("MyBatis: Hello World");
 %>
 <br>
 

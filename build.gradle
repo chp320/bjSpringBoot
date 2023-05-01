@@ -8,6 +8,7 @@ plugins {
 group = 'com.study'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+//sourceCompatibility = '11'
 
 repositories {
     mavenCentral()
@@ -26,6 +27,9 @@ dependencies {
     implementation 'org.projectlombok:lombok'
     */
     compileOnly 'org.projectlombok:lombok:1.18.22'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'  /* 최신 버전인 3.0.1로 진행하니 오류가 발생함.. (3.0.1 -> 2.2.0) */
+    /* MybatisDependsOnDatabaseInitializationDetector has been compiled by a more recent version of the Java Runtime (class file version 61.0), this version of the Java Runtime only recognizes class file versions up to 52.0 */
+    /* 즉, 최소 자바11버전까지만 지원한다는 것. 따라서 MyBatis 버전을 낮춰서 진행해보자! */
     runtimeOnly 'mysql:mysql-connector-java:8.0.32'    /* MySQL 데이터베이스 사용 의존성 셋팅 */
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
 
