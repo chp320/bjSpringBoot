@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Controller
@@ -30,6 +32,9 @@ public class MyController {
     public String userlistPage(Model model) {
         model.addAttribute("list", dao.listDao());
 
+        int nTotalCount = dao.articleCount();
+        System.out.println("Count: " + nTotalCount);
+
         return "list";
     }
 
@@ -49,15 +54,31 @@ public class MyController {
 
     @RequestMapping("/write")
     public String write(HttpServletRequest request, Model model) {
+        /* -- 파라미터가 Map으로 변경됨에 따라 주석 처리
         dao.writeDao(request.getParameter("writer"),
                 request.getParameter("title"),
                 request.getParameter("content"));
+         */
+        String sName = request.getParameter("writer");
+        String sTitle = request.getParameter("title");
+        String sContent = request.getParameter("content");
+
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("item1", sName);
+        map.put("item2", sTitle);
+        map.put("item3", sContent);
+
+        int nResult = dao.writeDao(map);    // insert 성공 시 1, 실패 시 0 리턴 */
+        System.out.println("Write: " + nResult);
+
         return "redirect:list";
     }
 
     @RequestMapping("/delete")
     public String delete(HttpServletRequest request, Model model) {
-        dao.deleteDao(request.getParameter("id"));
+        String sId = request.getParameter("id");
+        int nResult = dao.deleteDao(sId);   // delete 성공 시 delete 수행 개수만큼 리턴, 실패 시 0 리턴 (update 도 동일) */
+        System.out.println("Delete: " + nResult);
 
         return "redirect:list";
     }

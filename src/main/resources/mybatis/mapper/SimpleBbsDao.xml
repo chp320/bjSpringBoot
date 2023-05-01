@@ -15,13 +15,24 @@
         select * from simple_bbs where id = #{0}
     </select>
 
+    <!--
     <insert id="writeDao">
         insert into simple_bbs (id, writer, title, content)
         values ((select get_seq('id_seq')), #{param1}, #{param2}, #{param3})
     </insert>
+    -->
+    <insert id="writeDao" parameterType="java.util.HashMap">
+        insert into simple_bbs (id, writer, title, content)
+        values ( (select get_seq('id_seq')), #{item1}, #{item2}, #{item3} )
+    </insert>
+
 
     <delete id="deleteDao">
 <!--        delete from simple_bbs where id = #{param1} -->
         delete from simple_bbs where id = #{_id}
     </delete>
+
+    <select id="articleCount" resultType="_int"> <!-- 데이터타입이 '원시형'인 경우 언더바(_)를 앞에 붙힌다. -->
+        select count(*) from simple_bbs
+    </select>
 </mapper>
