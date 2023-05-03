@@ -1,0 +1,43 @@
+21.1 서비스와 트랜잭션
+- 스프링에서 지정된 범위 내에서 에러 발생 시 그 범위 안에서 수행한 DB작업의 롤백 수행, 에러 없다면 커밋 수행
+- "서비스 + 트랜잭션" 기능 추가 -> 서비스 필요성 및 트랜잭션 구현 방법 알아봄
+- 21장에서는 트랜잭션 기능 미적용 시, 에러 발생했을 때 어떻게 처리되는지 알아봄
+- 22장에서는 트랜잭션 기능 적용해서 에러 발생했을 때 처리 방법 알아봄
+
+21.2 테스트 테이블 생성 및 데이터 구성
+/* ('23.05.03) 도서 "예제로 배우는 스프링부트 입문 - 21. 트랜잭션 미적용 시 에러 상황
+*/
+
+-- 테이블 생성 및 데이터 구성
+drop table transaction1 ;
+create table transaction1 (
+	consumerid varchar(20),
+    amount int
+);
+
+drop table transaction2 ;
+create table transaction2 (
+	consumerid varchar(20),
+    amount int
+);
+
+drop table transaction3 ;
+create table transaction3 (
+	consumerid varchar(20),
+    amount int
+);
+
+insert into transaction1 values ('1', 100);
+insert into transaction2 values ('1', 100);
+insert into transaction3 values ('1', 100);
+commit;
+
+delete from transaction1 ;
+delete from transaction2 ;
+delete from transaction3 ;
+commit;
+
+select * from transaction1 ;
+select * from transaction2 ;
+select * from transaction3 ;
+
