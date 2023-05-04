@@ -1,6 +1,6 @@
 package com.study.helloworld;
 
-import com.study.helloworld.service.IBuyTicketService;
+import com.study.helloworld.service.BuyAndLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class MyController {
-
+    /* 컨트롤러에서 호출하는 서비스를 IBuyTicketService -> BuyAndLogService 로 변경 */
     @Autowired
-    IBuyTicketService buyTicketService;
+    BuyAndLogService buyAndLog;
 
     @RequestMapping("/")
     public @ResponseBody String root() throws Exception {
-        return "Transaction X (3)";
+        return "Transaction X (4)";
     }
 
     @RequestMapping("/buy_ticket")
@@ -29,7 +29,8 @@ public class MyController {
                                   @RequestParam("amount") String amount,
                                   @RequestParam("error") String error,
                                   Model model) {
-        int nResult = buyTicketService.buy(consumerId, Integer.parseInt(amount), error);
+        int nResult = buyAndLog.buy(consumerId, Integer.parseInt(amount), error);
+        System.out.println("nResult: " + nResult);
 
         model.addAttribute("consumerId", consumerId);
         model.addAttribute("amount", amount);
