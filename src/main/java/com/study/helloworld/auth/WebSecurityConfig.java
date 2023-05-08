@@ -26,9 +26,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/loginForm")        // 로그인폼 url 지정, default: /login
                 .loginProcessingUrl("/j_spring_security_check")
                 .failureUrl("/loginError")  // default: /login?error
-                //.defaultSuccessUrl("/"
+                .defaultSuccessUrl("/member/welcome")   // 로그인 성공시 호출할 url. 미지정 시 root(/)로 이동
                 .usernameParameter("j_username")    // default: j_username
-                .passwordParameter(("j_password"))  // default: j_password
+                .passwordParameter("j_password")  // default: j_password
                 .permitAll();
 
         http.logout()
