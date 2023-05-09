@@ -1,0 +1,8 @@
+28.1 JSTL (JSP Standard Tag Library)
+- HTML에서 기본 제공하는 것이 아닌 개발자가 추가한 태그를 '커스텀 태그'라 함
+- JSP 안에서 사용 가능한 커스텀 태그 라이브러리를 표준화한 것을 JSTL이라 함
+- JSTL 사용을 위해 build.gradle 에 추가 필요
+  -> implementation 'javax.servlet:jstl'
+- 스프링 시큐리티 사용을 위해 별도 추가 필요
+  -> implementation 'org.springframework.security:spring-security-taglibs'
+

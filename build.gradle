@@ -38,6 +38,9 @@ dependencies {
     // JSP 사용을 위한 의존성 추가
     implementation 'javax.servlet:jstl'
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+
+    // JSTL 사용을 위한 의존성 추가
+    implementation 'org.springframework.security:spring-security-taglibs'
 }
 
 tasks.named('test') {
