@@ -1,5 +1,6 @@
 package com.study.helloworld.auth;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,12 +9,21 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 @Configuration          // 스프링 설정으로 사용한다는 의미
 @EnableWebSecurity      // 스프링 시큐리티 기능 활성화 의미
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+
+//    public AuthenticationFailureHandler authenticationFailureHandler;
+    @Autowired
+    public CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+
     @Override
+//    @RequiredArgsConstructor
     protected void configure(HttpSecurity http) throws Exception {
+
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/css/**", "/js/**", "/img/**").permitAll()
@@ -25,7 +35,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .loginPage("/loginForm")        // 로그인폼 url 지정, default: /login
                 .loginProcessingUrl("/j_spring_security_check")
-                .failureUrl("/loginError")  // default: /login?error
+                /* 로그인 실패 시, 로그인페이지로 전달하기 위해 failureUrl 수정. 단, 쿼리스트링 추가 */
+//                .failureUrl("/loginError")  // default: /login?error
+//                .failureUrl("/loginForm?error")
+                // AuthenticationFailureHandler는 인터페이스이기 때문에 그 구현체 CustomAuthenticationFailureHandler 객체를 파라미터로 넘기도록 수정
+
+//                .failureHandler(authenticationFailureHandler)
+                .failureHandler(customAuthenticationFailureHandler)
                 .defaultSuccessUrl("/member/welcome")   // 로그인 성공시 호출할 url. 미지정 시 root(/)로 이동
                 .usernameParameter("j_username")    // default: j_username
                 .passwordParameter("j_password")  // default: j_password

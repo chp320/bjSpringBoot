@@ -9,7 +9,7 @@ public class MyController {
 
     @RequestMapping("/")
     public @ResponseBody String root() throws Exception {
-        return "Security-LoginForm (2)";
+        return "Security-LoginForm (3)";
     }
 
     @RequestMapping("/guest/welcome")
@@ -32,8 +32,11 @@ public class MyController {
         return "security/loginForm";
     }
 
+    // 로그인 에러 발생 시, 로그인 페이지에서 에러 내용 노출할 예정으로 기존 에러페이지 리퀘스트 맵핑은 주석 처리
+    /*
     @RequestMapping("/loginError")
     public String loginError() {
         return "security/loginError";
     }
+    */
 }
