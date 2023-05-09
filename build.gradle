@@ -12,6 +12,10 @@ sourceCompatibility = '1.8'
 
 repositories {
     mavenCentral()
+    maven { url "https://repo.spring.io/libs-release" }
+    maven { url "https://mvnrepository.com/artifact/org/webjars" }
+    maven { url "https://repo.maven.apache.org/maven2" }
+    maven { url "https://maven.webjars.org" }
 }
 
 dependencies {
@@ -41,6 +45,11 @@ dependencies {
 
     // JSTL 사용을 위한 의존성 추가
     implementation 'org.springframework.security:spring-security-taglibs'
+
+    // WebJars 사용을 위한 의존성 추가
+    implementation 'org.webjars:jquery:3.6.0'
+    implementation 'org.webjars:bootstrap:5.1.0'
+
 }
 
 tasks.named('test') {
