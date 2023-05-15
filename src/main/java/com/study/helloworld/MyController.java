@@ -9,6 +9,7 @@ public class MyController {
 
     @RequestMapping("/")
     public String root() throws Exception {
-        return "index";
+//        return "index";
+        return "test01";
     }
 }
